@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookie, Be My Valentine</title>
+
+    <style>
+        body {
+            background: linear-gradient(#ffe6ef, #ffd3e0);
+            font-family: "Georgia", serif;
+            text-align: center;
+            overflow-x: hidden;
+            padding-top: 40px;
+            transition: background 1.5s ease;
+        }
+
+        body.dimmed {
+            background: linear-gradient(#f5c6d6, #eab0c3);
+        }
+
+        h1 {
+            color: #c2185b;
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #6a1b3f;
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+        }
+
+        h1, p, button, #envelope, #loveLetter {
+            position: relative;
+            z-index: 2;
+        }
+
+        .btn {
+            background: #c2185b;
+            color: white;
+            padding: 15px 35px;
+            border-radius: 40px;
+            font-size: 1.3rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.6s ease;
+            margin: 10px;
+        }
+
+        .btn.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #noBtn {
+            position: absolute;
+        }
+
+        /* Floating Heart Glow */
+        .heart-glow {
+            position: fixed;
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12rem;
+            opacity: 0.08;
+            filter: blur(1px);
+            animation: floatPulse 6s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+            transition: opacity 1.5s ease;
+        }
+
+        body.dimmed .heart-glow {
+            opacity: 0.03;
+        }
+
+        @keyframes floatPulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -55%) scale(1.05); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        /* Falling elements */
+        .heart, .sparkle, .rose {
+            animation-play-state: running;
+        }
+
+        body.dimmed .heart,
+        body.dimmed .sparkle,
+        body.dimmed .rose {
+            animation-duration: 2x;
+        }
+
+        .heart {
+            position: fixed;
+            top: -20px;
+            font-size: 1.5rem;
+            animation: fall linear infinite;
+            opacity: 0.9;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        .sparkle {
+            position: fixed;
+            font-size: 1rem;
+            color: gold;
+            animation: sparkleFall linear infinite;
+        }
+
+        @keyframes sparkleFall {
+            to { transform: translateY(100vh) scale(0.5); opacity: 0; }
+        }
+
+        .rose {
+            position: fixed;
+            top: 100vh;
+            font-size: 2rem;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            to { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Envelope */
+        #envelope {
+            width: 140px;
+            height: 90px;
+            margin: 40px auto;
+            cursor: pointer;
+            display: none;
+        }
+
+        #envelope .back {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 10px;
+            position: absolute;
+        }
+
+        #envelope .flap {
+            width: 100%;
+            height: 100%;
+            background: #f7b6c8;
+            clip-path: polygon(0 0, 100% 0, 50% 60%);
+            position: absolute;
+            transform-origin: top;
+            transition: transform 0.6s;
+        }
+
+        #envelope.open .flap {
+            transform: rotateX(180deg);
+        }
+
+        /* Love Letter */
+        #loveLetter {
+            width: 70%;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(194,24,91,0.25);
+            color: #6a1b3f;
+            font-size: 1.2rem;
+            line-height: 1.7;
+            display: none;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards;
+        }
+
+        .date {
+            margin-top: 25px;
+            font-size: 0.9rem;
+            color: #a05a75;
+            font-style: italic;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .burst-heart {
+            position: absolute;
+            font-size: 2rem;
+            animation: burst 1s ease-out forwards;
+        }
+
+        @keyframes burst {
+            to { transform: scale(2); opacity: 0; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="heart-glow">❤️</div>
+
+<h1>Alyssa, will you be my Valentine?</h1>
+<p>Forever yours — your Bookie 💕</p>
+
+<button class="btn" onclick="showEnvelope()">Yes!</button>
+<button class="btn" id="noBtn" onmouseover="runAway()">No</button>
+
+<div id="envelope" onclick="openLetter()">
+    <div class="back"></div>
+    <div class="flap"></div>
+</div>
+
+<div id="loveLetter">
+    <p>
+        Over these past three years, my love for you hasn’t just grown — it’s transformed me. What started as something beautiful has deepened into something steady, grounding, and irreplaceable. Every moment with you has added another layer to the way I feel, turning simple days into memories I carry with me. You’ve shown me a kind of love that feels like home, a love that keeps expanding in ways I never expected but always hoped for. Being with you has taught me what it means to truly choose someone, every day, with my whole heart.
+    </p>
+
+    <p>
+        nd now, with Cameron in our lives, that love has taken on an entirely new meaning. Watching you as his mother fills me with a pride and love I can’t fully put into words. I can’t wait to keep building this life with you — to nurture our little family, to grow through every season together, and to create a future that reflects the love we’ve poured into each other. I’m excited for every chapter still ahead of us, knowing that as long as it’s with you and our son, it will be full of purpose, joy, and a love that keeps getting stronger. I will do my best to continue to grow for you and for our Cameron, for love and for the infinite amount of years left of us being together. 
+    </p>
+
+    <div class="date">Written with love on February 2, 2026 #JG2026.</div>
+</div>
+
+<script>
+    function runAway() {
+        const btn = document.getElementById("noBtn");
+        btn.style.left = Math.random() * (window.innerWidth - 150) + "px";
+        btn.style.top = Math.random() * (window.innerHeight - 150) + "px";
+    }
+
+    function create(el, cls, emoji, dur) {
+        const e = document.createElement("div");
+        e.className = cls;
+        e.innerHTML = emoji;
+        e.style.left = Math.random() * 100 + "vw";
+        e.style.animationDuration = dur;
+        document.body.appendChild(e);
+        setTimeout(() => e.remove(), 9000);
+    }
+
+    setInterval(() => create("div","heart","❤️",(3+Math.random()*4)+"s"),300);
+    setInterval(() => create("div","sparkle","✨",(2+Math.random()*3)+"s"),400);
+    setInterval(() => create("div","rose","🌹",(5+Math.random()*5)+"s"),1200);
+
+    function showEnvelope() {
+        document.getElementById("envelope").style.display = "block";
+    }
+
+    function openLetter() {
+        document.body.classList.add("dimmed");
+        document.querySelectorAll(".btn").forEach(b => b.classList.add("fade-out"));
+        document.getElementById("envelope").classList.add("open");
+        setTimeout(() => document.getElementById("loveLetter").style.display = "block", 600);
+    }
+</script>
+
+</body>
+</html>
